@@ -90,6 +90,18 @@ textarea{min-height:100px;resize:vertical}
 .channels{display:grid;gap:10px}
 @media(min-width:520px){.channels{grid-template-columns:repeat(3,1fr)}}
 
+/* Avis */
+.avis-box{display:grid;gap:26px}
+@media(min-width:900px){.avis-box{grid-template-columns:1fr 1.2fr;align-items:start;gap:48px}}
+.avis-box .intro{margin-bottom:0}
+fieldset{border:0;padding:0;display:grid;gap:6px}
+legend{font-weight:600;font-size:14px;margin-bottom:6px}
+.stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:2px}
+.stars input{position:absolute;opacity:0;width:1px;height:1px}
+.stars label{font-size:38px;line-height:1;color:#3a3f48;cursor:pointer;padding:2px 4px;font-weight:400}
+.stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--accent)}
+.stars input:focus-visible+label{outline:3px solid #fff;outline-offset:2px}
+.note{font-size:13px;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
 footer a{text-decoration:none}footer a:hover{color:var(--text)}
@@ -103,6 +115,23 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
 .pulse{animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
 @media(prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+/* Liste des avis publics */
+.avis-pub{margin-top:56px}
+.avis-pub h3{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.5vw,36px);margin-bottom:6px}
+.moy{color:var(--muted);margin-bottom:22px}
+.moy b{color:var(--text);font-family:var(--display);font-size:28px}
+.moy .st{color:var(--accent);letter-spacing:2px}
+.liste{display:grid;gap:14px}
+@media(min-width:800px){.liste{grid-template-columns:1fr 1fr}}
+.rev{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--accent);padding:20px}
+.rev .st{color:var(--accent);letter-spacing:2px;font-size:18px}
+.rev .qui{font-weight:600;margin-top:6px}
+.rev .qui small{color:var(--muted);font-weight:400}
+.rev p{color:var(--muted);margin-top:8px;overflow-wrap:anywhere}
+.vide{border:1px dashed var(--line);padding:22px;color:var(--muted)}
+.retour{font-weight:600;margin-top:4px}
+.retour.ok{color:#4ADE80}.retour.err{color:#FF6B6B}
 </style>
 </head>
 <body>
@@ -115,6 +144,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
       <li><a href="#clim">Clim</a></li>
       <li><a href="#serrurerie">Serrurerie</a></li>
       <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#avis">Avis</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a class="navtel" href="tel:+33656694238">06 56 69 42 38</a>
@@ -207,6 +237,61 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
     </div>
   </section>
 
+  <section id="avis">
+    <div class="wrap">
+      <div class="avis-box">
+        <div>
+          <p class="tag">AVIS CLIENTS</p>
+          <h2>Votre avis compte.</h2>
+          <p class="intro">Vous avez fait appel à Reprog30 ? Dites-nous ce que vous en avez pensé : note et commentaire, en quelques secondes.</p>
+        </div>
+        <form id="avisForm" onsubmit="return false">
+          <fieldset>
+            <legend>Votre note</legend>
+            <div class="stars" role="radiogroup" aria-label="Note de 1 à 5 étoiles">
+              <input type="radio" name="note" id="n5" value="5"><label for="n5" title="5 sur 5">★</label>
+              <input type="radio" name="note" id="n4" value="4"><label for="n4" title="4 sur 5">★</label>
+              <input type="radio" name="note" id="n3" value="3"><label for="n3" title="3 sur 5">★</label>
+              <input type="radio" name="note" id="n2" value="2"><label for="n2" title="2 sur 5">★</label>
+              <input type="radio" name="note" id="n1" value="1"><label for="n1" title="1 sur 5">★</label>
+            </div>
+          </fieldset>
+          <label>Prestation
+            <select id="avService">
+              <option>Reprogrammation</option>
+              <option>E85</option>
+              <option>Recharge de clim</option>
+              <option>Serrurerie automobile</option>
+              <option>Autre</option>
+            </select>
+          </label>
+          <label>Votre prénom
+            <input id="avNom" type="text" placeholder="Ex : Julien">
+          </label>
+          <label>Votre commentaire
+            <textarea id="avTexte" placeholder="Racontez votre expérience"></textarea>
+          </label>
+          <input id="avSite" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <p class="note">En publiant votre avis, vous acceptez qu'il soit affiché publiquement sur ce site avec votre prénom, votre note et votre commentaire.</p>
+          <button class="btn primary" id="avPublier" type="button" hidden>Publier mon avis sur le site</button>
+          <p class="retour" id="avRetour" role="status"></p>
+          <p class="note">Vous pouvez aussi nous envoyer votre avis en privé :</p>
+          <div class="channels">
+            <button class="btn wa" type="button" data-av="wa">WhatsApp</button>
+            <button class="btn primary" type="button" data-av="sms">SMS</button>
+            <button class="btn ghost" type="button" data-av="mail">Gmail</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="avis-pub">
+        <h3>Avis des clients</h3>
+        <p class="moy" id="avisMoy"></p>
+        <div class="liste" id="avisListe"><p class="vide">Chargement des avis…</p></div>
+      </div>
+    </div>
+  </section>
+
   <section id="contact">
     <div class="wrap">
       <p class="tag">CONTACT</p>
@@ -276,6 +361,88 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
       else if(ch==='sms') window.location.href='sms:+'+NUM+'?&body='+e;
       else window.location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Demande de devis – '+d.sv)+'&body='+e;
     });
+  });
+})();
+
+(function(){
+  var NUM='33656694238', MAIL='reprog30@gmail.com';
+  var MOBILE=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function msg(){
+    var r=document.querySelector('input[name="note"]:checked');
+    var note=r?r.value:null;
+    var nom=document.getElementById('avNom').value.trim();
+    var txt=document.getElementById('avTexte').value.trim();
+    var sv=document.getElementById('avService').value;
+    var t='Avis Reprog30\nNote : '+(note?note+'/5':'non renseignée')+'\nPrestation : '+sv;
+    if(nom) t+='\nPrénom : '+nom;
+    if(txt) t+='\n\n'+txt;
+    return t;
+  }
+  document.querySelectorAll('[data-av]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var e=encodeURIComponent(msg()), ch=b.getAttribute('data-av'), su=encodeURIComponent('Avis client Reprog30');
+      if(ch==='wa') window.open('https://wa.me/'+NUM+'?text='+e,'_blank','noopener');
+      else if(ch==='sms') window.location.href='sms:+'+NUM+'?&body='+e;
+      else if(MOBILE) window.location.href='mailto:'+MAIL+'?subject='+su+'&body='+e;
+      else window.open('https://mail.google.com/mail/?view=cm&fs=1&to='+MAIL+'&su='+su+'&body='+e,'_blank','noopener');
+    });
+  });
+})();
+
+(function(){
+  /* ====== À REMPLIR APRÈS LA CRÉATION DU COMPTE SUPABASE ====== */
+  var SB_URL='';   // ex : https://abcdefgh.supabase.co
+  var SB_KEY='';   // clé « anon public »
+  /* ============================================================= */
+  var liste=document.getElementById('avisListe'), moy=document.getElementById('avisMoy');
+  var btn=document.getElementById('avPublier'), retour=document.getElementById('avRetour');
+  function etoiles(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);}
+  function vide(msg){liste.textContent='';var p=document.createElement('p');p.className='vide';p.textContent=msg;liste.appendChild(p);moy.textContent='';}
+  function hdr(extra){var h={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY};for(var k in extra)h[k]=extra[k];return h;}
+  function afficher(rows){
+    if(!rows.length){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');return;}
+    var somme=0;liste.textContent='';
+    rows.forEach(function(r){
+      somme+=r.note;
+      var d=document.createElement('article');d.className='rev';
+      var st=document.createElement('div');st.className='st';st.textContent=etoiles(r.note);
+      var q=document.createElement('div');q.className='qui';q.textContent=r.prenom||'Client';
+      if(r.prestation){var sm=document.createElement('small');sm.textContent=' · '+r.prestation;q.appendChild(sm);}
+      var p=document.createElement('p');p.textContent=r.texte;
+      d.appendChild(st);d.appendChild(q);d.appendChild(p);liste.appendChild(d);
+    });
+    var m=(somme/rows.length).toFixed(1).replace('.',',');
+    moy.textContent='';
+    var b=document.createElement('b');b.textContent=m+'/5';moy.appendChild(b);
+    moy.appendChild(document.createTextNode(' · '+rows.length+(rows.length>1?' avis':' avis')));
+  }
+  function charger(){
+    if(!SB_URL||!SB_KEY){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');return;}
+    fetch(SB_URL+'/rest/v1/avis?select=prenom,note,prestation,texte&approuve=eq.true&order=cree_le.desc&limit=50',{headers:hdr({})})
+      .then(function(r){if(!r.ok)throw 0;return r.json();}).then(afficher)
+      .catch(function(){vide('Les avis ne peuvent pas être affichés pour le moment.');});
+  }
+  charger();
+  if(!SB_URL||!SB_KEY||!btn)return;
+  btn.hidden=false;
+  btn.addEventListener('click',function(){
+    retour.className='retour';retour.textContent='';
+    if(document.getElementById('avSite').value){return;}
+    var r=document.querySelector('input[name="note"]:checked');
+    var texte=document.getElementById('avTexte').value.trim();
+    var prenom=document.getElementById('avNom').value.trim().slice(0,40);
+    if(!r){retour.className='retour err';retour.textContent='Choisissez une note en cliquant sur les étoiles.';return;}
+    if(texte.length<5){retour.className='retour err';retour.textContent='Écrivez un petit commentaire (5 caractères minimum).';return;}
+    try{var t=localStorage.getItem('avisT');if(t&&Date.now()-Number(t)<60000){retour.className='retour err';retour.textContent='Merci de patienter une minute avant un nouvel avis.';return;}}catch(e){}
+    btn.disabled=true;
+    fetch(SB_URL+'/rest/v1/avis',{method:'POST',headers:hdr({'Content-Type':'application/json',Prefer:'return=minimal'}),
+      body:JSON.stringify({prenom:prenom||'Client',note:Number(r.value),prestation:document.getElementById('avService').value,texte:texte.slice(0,500)})})
+      .then(function(x){if(!x.ok)throw 0;
+        try{localStorage.setItem('avisT',String(Date.now()));}catch(e){}
+        retour.className='retour ok';retour.textContent='Merci ! Votre avis est publié.';
+        document.getElementById('avTexte').value='';document.getElementById('avNom').value='';r.checked=false;charger();})
+      .catch(function(){retour.className='retour err';retour.textContent='Impossible de publier l\u2019avis pour le moment. Réessayez plus tard.';})
+      .then(function(){btn.disabled=false;});
   });
 })();
 </script>
