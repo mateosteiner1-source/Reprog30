@@ -390,15 +390,10 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
 })();
 
 (function(){
-  /* ====== À REMPLIR APRÈS LA CRÉATION DU COMPTE SUPABASE ====== */
-  var SB_URL='';   // ex : https://abcdefgh.supabase.co
-  var SB_KEY='';   // clé « anon public »
-  /* ============================================================= */
   var liste=document.getElementById('avisListe'), moy=document.getElementById('avisMoy');
   var btn=document.getElementById('avPublier'), retour=document.getElementById('avRetour');
   function etoiles(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);}
   function vide(msg){liste.textContent='';var p=document.createElement('p');p.className='vide';p.textContent=msg;liste.appendChild(p);moy.textContent='';}
-  function hdr(extra){var h={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY};for(var k in extra)h[k]=extra[k];return h;}
   function afficher(rows){
     if(!rows.length){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');return;}
     var somme=0;liste.textContent='';
@@ -414,17 +409,15 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
     var m=(somme/rows.length).toFixed(1).replace('.',',');
     moy.textContent='';
     var b=document.createElement('b');b.textContent=m+'/5';moy.appendChild(b);
-    moy.appendChild(document.createTextNode(' · '+rows.length+(rows.length>1?' avis':' avis')));
+    moy.appendChild(document.createTextNode(' · '+rows.length+' avis'));
   }
   function charger(){
-    if(!SB_URL||!SB_KEY){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');return;}
-    fetch(SB_URL+'/rest/v1/avis?select=prenom,note,prestation,texte&approuve=eq.true&order=cree_le.desc&limit=50',{headers:hdr({})})
-      .then(function(r){if(!r.ok)throw 0;return r.json();}).then(afficher)
-      .catch(function(){vide('Les avis ne peuvent pas être affichés pour le moment.');});
+    fetch('/api/avis').then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(rows){afficher(rows);if(btn)btn.hidden=false;})
+      .catch(function(){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');});
   }
   charger();
-  if(!SB_URL||!SB_KEY||!btn)return;
-  btn.hidden=false;
+  if(!btn)return;
   btn.addEventListener('click',function(){
     retour.className='retour';retour.textContent='';
     if(document.getElementById('avSite').value){return;}
@@ -433,12 +426,12 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
     var prenom=document.getElementById('avNom').value.trim().slice(0,40);
     if(!r){retour.className='retour err';retour.textContent='Choisissez une note en cliquant sur les étoiles.';return;}
     if(texte.length<5){retour.className='retour err';retour.textContent='Écrivez un petit commentaire (5 caractères minimum).';return;}
-    try{var t=localStorage.getItem('avisT');if(t&&Date.now()-Number(t)<60000){retour.className='retour err';retour.textContent='Merci de patienter une minute avant un nouvel avis.';return;}}catch(e){}
     btn.disabled=true;
-    fetch(SB_URL+'/rest/v1/avis',{method:'POST',headers:hdr({'Content-Type':'application/json',Prefer:'return=minimal'}),
+    fetch('/api/avis',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({prenom:prenom||'Client',note:Number(r.value),prestation:document.getElementById('avService').value,texte:texte.slice(0,500)})})
-      .then(function(x){if(!x.ok)throw 0;
-        try{localStorage.setItem('avisT',String(Date.now()));}catch(e){}
+      .then(function(x){
+        if(x.status===429){retour.className='retour err';retour.textContent='Merci de patienter une minute avant un nouvel avis.';return;}
+        if(!x.ok)throw 0;
         retour.className='retour ok';retour.textContent='Merci ! Votre avis est publié.';
         document.getElementById('avTexte').value='';document.getElementById('avNom').value='';r.checked=false;charger();})
       .catch(function(){retour.className='retour err';retour.textContent='Impossible de publier l\u2019avis pour le moment. Réessayez plus tard.';})
