@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reprog30 — Reprogrammation Automobile, Clim & Serrurerie</title>
+<meta name="description" content="Reprog30 — Reprogrammation automobile, optimisation moteur, E85, recharge de climatisation et serrurerie automobile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0C0E; --panel:#14161A; --line:#272B32; --text:#F2F3F5; --muted:#9AA0AA; --accent:#E5132B; --wa:#25D366;
+  --display:'Rajdhani','Arial Narrow',sans-serif; --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:70px}
+a{color:inherit}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+section{padding:80px 0}
+
+/* Nav */
+nav.top{position:sticky;top:0;z-index:20;background:rgba(11,12,14,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.08em;text-decoration:none}
+.logo b{color:var(--accent)}
+nav.top ul{display:none;list-style:none;padding:0;gap:28px}
+nav.top ul a{text-decoration:none;color:var(--muted);font-size:15px}
+nav.top ul a:hover{color:var(--text)}
+.navtel{font-weight:600;text-decoration:none;font-size:15px;border:1px solid var(--accent);padding:8px 14px}
+@media(min-width:900px){nav.top ul{display:flex}}
+
+/* Buttons */
+.btn{display:inline-block;font:600 16px var(--body);padding:15px 26px;text-decoration:none;border:1px solid var(--accent);cursor:pointer;color:var(--text);background:transparent;text-align:center}
+.btn.primary{background:var(--accent)}
+.btn.primary:hover{background:#fff;color:var(--bg);border-color:#fff}
+.btn.ghost:hover{background:var(--accent)}
+.btn.wa{background:var(--wa);border-color:var(--wa);color:#06210f}
+.btn.wa:hover{background:#fff;border-color:#fff}
+
+/* Hero */
+.hero{padding:70px 0 60px;background:radial-gradient(ellipse at 80% 20%,rgba(229,19,43,.18),transparent 55%)}
+.hero .wrap{display:grid;gap:44px;align-items:center}
+.eyebrow{font:600 13px var(--body);letter-spacing:.18em;color:var(--accent)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(44px,9vw,84px);line-height:1;margin:14px 0 20px}
+.hero p.lead{color:var(--muted);font-size:18px;max-width:34em}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 22px}
+.checks{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--muted);font-size:15px}
+.checks span::before{content:"✓ ";color:var(--accent)}
+.ecu{position:relative;aspect-ratio:1/1;max-width:440px;width:100%;margin:0 auto;border:1px solid var(--line);background:var(--panel)}
+.ecu svg{position:absolute;inset:0;width:100%;height:100%}
+.ecu .words{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:var(--display);font-weight:700;line-height:1.1;letter-spacing:.12em;color:var(--muted);font-size:17px}
+.ecu .words strong{display:block;color:var(--text);font-size:30px}
+@media(min-width:900px){.hero .wrap{grid-template-columns:1.15fr 1fr}}
+
+/* Titres de section */
+.tag{font:600 13px var(--body);letter-spacing:.18em;color:var(--accent)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,5.5vw,52px);line-height:1.05;margin:10px 0 14px}
+.intro{color:var(--muted);max-width:40em;margin-bottom:38px}
+
+/* Cartes */
+.cards{display:grid;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);padding:26px;border-top:3px solid var(--accent)}
+.card .n{font-family:var(--display);font-weight:700;font-size:22px;color:var(--accent);letter-spacing:.06em}
+.card h3{font-family:var(--display);font-weight:700;font-size:28px;margin:6px 0 8px}
+.card p{color:var(--muted);font-size:15.5px}
+@media(min-width:800px){.cards{grid-template-columns:repeat(3,1fr)}}
+.facts{display:grid;gap:16px;margin-top:16px}
+.fact{border:1px solid var(--line);padding:18px 22px}
+.fact strong{display:block;font-family:var(--display);font-size:22px}
+.fact span{color:var(--muted);font-size:15px}
+@media(min-width:800px){.facts{grid-template-columns:repeat(3,1fr)}}
+.alt{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.alt .card{background:var(--bg)}
+
+/* Contact */
+.tiles{display:grid;gap:16px;margin-bottom:34px}
+.tile{display:block;border:1px solid var(--line);padding:22px;text-decoration:none;background:var(--panel)}
+.tile:hover{border-color:var(--accent)}
+.tile small{display:block;color:var(--accent);letter-spacing:.16em;font-weight:600;font-size:12px}
+.tile strong{font-family:var(--display);font-size:clamp(26px,5vw,38px);word-break:break-word}
+@media(min-width:800px){.tiles{grid-template-columns:1fr 1fr}}
+form{display:grid;gap:14px;background:var(--panel);border:1px solid var(--line);padding:24px;max-width:640px}
+label{display:grid;gap:6px;font-weight:600;font-size:14px}
+select,input,textarea{font:400 16px var(--body);padding:12px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:0;width:100%}
+textarea{min-height:100px;resize:vertical}
+.hint{color:var(--muted);font-size:13px}
+.channels{display:grid;gap:10px}
+@media(min-width:520px){.channels{grid-template-columns:repeat(3,1fr)}}
+
+/* Avis */
+.avis-box{display:grid;gap:26px}
+@media(min-width:900px){.avis-box{grid-template-columns:1fr 1.2fr;align-items:start;gap:48px}}
+.avis-box .intro{margin-bottom:0}
+fieldset{border:0;padding:0;display:grid;gap:6px}
+legend{font-weight:600;font-size:14px;margin-bottom:6px}
+.stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:2px}
+.stars input{position:absolute;opacity:0;width:1px;height:1px}
+.stars label{font-size:38px;line-height:1;color:#3a3f48;cursor:pointer;padding:2px 4px;font-weight:400}
+.stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--accent)}
+.stars input:focus-visible+label{outline:3px solid #fff;outline-offset:2px}
+.note{font-size:13px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+footer a{text-decoration:none}footer a:hover{color:var(--text)}
+
+/* Barre mobile */
+.callbar{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:var(--panel);border-top:1px solid var(--line);z-index:30;padding-bottom:env(safe-area-inset-bottom,0)}
+.callbar a{padding:17px 4px;text-align:center;font-weight:600;font-size:14px;text-decoration:none}
+.callbar a:first-child{background:var(--accent)}
+@media(min-width:900px){.callbar{display:none}body{padding-bottom:0}}
+
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+[hidden]{display:none!important}
+/* Liste des avis publics */
+.avis-pub{margin-top:56px}
+.avis-pub h3{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.5vw,36px);margin-bottom:6px}
+.moy{color:var(--muted);margin-bottom:22px}
+.moy b{color:var(--text);font-family:var(--display);font-size:28px}
+.moy .st{color:var(--accent);letter-spacing:2px}
+.liste{display:grid;gap:14px}
+@media(min-width:800px){.liste{grid-template-columns:1fr 1fr}}
+.rev{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--accent);padding:20px}
+.rev .st{color:var(--accent);letter-spacing:2px;font-size:18px}
+.rev .qui{font-weight:600;margin-top:6px}
+.rev .qui small{color:var(--muted);font-weight:400}
+.rev p{color:var(--muted);margin-top:8px;overflow-wrap:anywhere}
+.vide{border:1px dashed var(--line);padding:22px;color:var(--muted)}
+.retour{font-weight:600;margin-top:4px}
+.retour.ok{color:#4ADE80}.retour.err{color:#FF6B6B}
+</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Navigation principale">
+  <div class="wrap">
+    <a class="logo" href="#accueil">REPROG<b>30</b></a>
+    <ul>
+      <li><a href="#reprogrammation">Reprogrammation</a></li>
+      <li><a href="#clim">Clim</a></li>
+      <li><a href="#serrurerie">Serrurerie</a></li>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="navtel" href="tel:+33656694238">06 56 69 42 38</a>
+  </div>
+</nav>
+
+<main id="accueil">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">REPROGRAMMATION • PERFORMANCE • FIABILITÉ</p>
+        <h1>Libérez le potentiel de votre automobile.</h1>
+        <p class="lead">Reprog30 vous accompagne pour la reprogrammation moteur, l'optimisation des performances, les solutions E85, la recharge de climatisation et la serrurerie automobile.</p>
+        <div class="cta">
+          <a class="btn primary" href="#contact">Demander un devis</a>
+          <a class="btn ghost" href="tel:+33656694238">Appeler Reprog30</a>
+        </div>
+        <div class="checks"><span>Diagnostic</span><span>Optimisation</span><span>Clim</span><span>Serrurerie automobile</span></div>
+      </div>
+      <div class="ecu" aria-hidden="true">
+        <svg viewBox="0 0 400 400" fill="none">
+          <g stroke="#272B32" stroke-width="2">
+            <path d="M140 110V40M180 110V20M220 110V20M260 110V40M140 290v70M180 290v90M220 290v90M260 290v70M110 140H40M110 180H20M110 220H20M110 260H40M290 140h70M290 180h90M290 220h90M290 260h70"/>
+          </g>
+          <g stroke="#E5132B" stroke-width="2" class="pulse">
+            <path d="M180 110V20M220 290v90M110 180H20M290 220h90"/>
+          </g>
+          <rect x="110" y="110" width="180" height="180" rx="6" fill="#0B0C0E" stroke="#E5132B" stroke-width="2"/>
+          <rect x="135" y="135" width="130" height="130" rx="3" stroke="#272B32" stroke-width="2"/>
+          <text x="200" y="213" text-anchor="middle" font-family="Rajdhani, sans-serif" font-weight="700" font-size="44" letter-spacing="4" fill="#F2F3F5">ECU</text>
+        </svg>
+        <div class="words">PUISSANCE<strong>PERFORMANCE</strong>FIABILITÉ</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="reprogrammation">
+    <div class="wrap">
+      <p class="tag">REPROGRAMMATION AUTOMOBILE</p>
+      <h2>Une optimisation adaptée à votre véhicule.</h2>
+      <p class="intro">Du gain de couple à l'amélioration de l'agrément de conduite, chaque intervention doit être adaptée à la motorisation et à l'état du véhicule.</p>
+      <div class="cards">
+        <article class="card"><span class="n">01</span><h3>Stage 1</h3><p>Optimisation électronique du moteur en conservant une configuration mécanique d'origine, selon les possibilités du véhicule.</p></article>
+        <article class="card"><span class="n">02</span><h3>Stage 2</h3><p>Optimisation plus poussée avec prise en compte des modifications mécaniques compatibles et des objectifs de performance.</p></article>
+        <article class="card"><span class="n">03</span><h3>Stage 3</h3><p>Projet performance sur mesure : étude de la configuration, cohérence moteur/transmission et calibration adaptée.</p></article>
+      </div>
+      <div class="facts">
+        <div class="fact"><strong>E85</strong><span>Conversion / optimisation selon compatibilité</span></div>
+        <div class="fact"><strong>Diagnostic</strong><span>Lecture et analyse des défauts électroniques</span></div>
+        <div class="fact"><strong>Optimisation</strong><span>Couple, réponse moteur et agrément de conduite</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="clim" class="alt">
+    <div class="wrap">
+      <p class="tag">CLIMATISATION AUTOMOBILE</p>
+      <h2>Une clim qui refroidit à nouveau.</h2>
+      <p class="intro">L'air n'est plus frais ? On cherche la cause avant de remettre du gaz.</p>
+      <div class="cards">
+        <article class="card"><h3>Contrôle d'étanchéité</h3><p>Vérification du circuit pour repérer une fuite avant toute recharge.</p></article>
+        <article class="card"><h3>Recharge de clim</h3><p>Récupération, tirage au vide et recharge en gaz R134a ou R1234yf, selon votre véhicule.</p></article>
+        <article class="card"><h3>Vérification</h3><p>Contrôle de la température de sortie d'air pour valider le résultat.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="serrurerie">
+    <div class="wrap">
+      <p class="tag">SERRURERIE AUTOMOBILE</p>
+      <h2>Votre solution clé, au même endroit.</h2>
+      <p class="intro">Services de serrurerie automobile pour accompagner les automobilistes en cas de besoin.</p>
+      <div class="cards">
+        <article class="card"><span class="n">KEY</span><h3>Double de clé</h3><p>Création de double de clé automobile, selon le véhicule et le système installé.</p></article>
+        <article class="card"><span class="n">REMOTE</span><h3>Clé avec télécommande</h3><p>Solutions de clé et télécommande compatibles avec votre véhicule.</p></article>
+        <article class="card"><span class="n">SOS</span><h3>Perte totale</h3><p>Recherche d'une solution adaptée lorsque toutes les clés du véhicule sont perdues.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="prestations" class="alt">
+    <div class="wrap">
+      <p class="tag">POURQUOI REPROG30</p>
+      <h2>Une approche simple et transparente.</h2>
+      <div class="cards" style="margin-top:34px">
+        <article class="card"><span class="n">01</span><h3>Étude du véhicule</h3><p>Motorisation, configuration et objectif sont pris en compte avant l'intervention.</p></article>
+        <article class="card"><span class="n">02</span><h3>Solution sur mesure</h3><p>Le niveau de préparation est choisi selon le véhicule et le résultat recherché.</p></article>
+        <article class="card"><span class="n">03</span><h3>Accompagnement</h3><p>Un échange direct pour comprendre les possibilités et les limites de votre automobile.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis">
+    <div class="wrap">
+      <div class="avis-box">
+        <div>
+          <p class="tag">AVIS CLIENTS</p>
+          <h2>Votre avis compte.</h2>
+          <p class="intro">Vous avez fait appel à Reprog30 ? Dites-nous ce que vous en avez pensé : note et commentaire, en quelques secondes.</p>
+        </div>
+        <form id="avisForm" onsubmit="return false">
+          <fieldset>
+            <legend>Votre note</legend>
+            <div class="stars" role="radiogroup" aria-label="Note de 1 à 5 étoiles">
+              <input type="radio" name="note" id="n5" value="5"><label for="n5" title="5 sur 5">★</label>
+              <input type="radio" name="note" id="n4" value="4"><label for="n4" title="4 sur 5">★</label>
+              <input type="radio" name="note" id="n3" value="3"><label for="n3" title="3 sur 5">★</label>
+              <input type="radio" name="note" id="n2" value="2"><label for="n2" title="2 sur 5">★</label>
+              <input type="radio" name="note" id="n1" value="1"><label for="n1" title="1 sur 5">★</label>
+            </div>
+          </fieldset>
+          <label>Prestation
+            <select id="avService">
+              <option>Reprogrammation</option>
+              <option>E85</option>
+              <option>Recharge de clim</option>
+              <option>Serrurerie automobile</option>
+              <option>Autre</option>
+            </select>
+          </label>
+          <label>Votre prénom
+            <input id="avNom" type="text" placeholder="Ex : Julien">
+          </label>
+          <label>Votre commentaire
+            <textarea id="avTexte" placeholder="Racontez votre expérience"></textarea>
+          </label>
+          <input id="avSite" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <p class="note">En publiant votre avis, vous acceptez qu'il soit affiché publiquement sur ce site avec votre prénom, votre note et votre commentaire.</p>
+          <button class="btn primary" id="avPublier" type="button" hidden>Publier mon avis sur le site</button>
+          <p class="retour" id="avRetour" role="status"></p>
+          <p class="note">Vous pouvez aussi nous envoyer votre avis en privé :</p>
+          <div class="channels">
+            <button class="btn wa" type="button" data-av="wa">WhatsApp</button>
+            <button class="btn primary" type="button" data-av="sms">SMS</button>
+            <button class="btn ghost" type="button" data-av="mail">Gmail</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="avis-pub">
+        <h3>Avis des clients</h3>
+        <p class="moy" id="avisMoy"></p>
+        <div class="liste" id="avisListe"><p class="vide">Chargement des avis…</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <p class="tag">CONTACT</p>
+      <h2>Parlons de votre projet.</h2>
+      <p class="intro">Donnez-nous la marque, le modèle, l'année, la motorisation et votre objectif. Nous pourrons vous orienter vers la solution la plus adaptée.</p>
+      <div class="tiles">
+        <a class="tile" href="tel:+33656694238"><small>TÉLÉPHONE</small><strong>06 56 69 42 38</strong></a>
+        <a class="tile" href="mailto:reprog30@gmail.com"><small>E-MAIL</small><strong>reprog30@gmail.com</strong></a>
+      </div>
+      <form id="devis" onsubmit="return false">
+        <label>Votre besoin
+          <select id="service">
+            <option>Reprogrammation moteur</option>
+            <option>E85</option>
+            <option>Recharge de climatisation</option>
+            <option>Serrurerie automobile</option>
+            <option>Autre demande</option>
+          </select>
+        </label>
+        <label>Véhicule (marque, modèle, année, motorisation)
+          <input id="vehicule" type="text" placeholder="Ex : Peugeot 308 1.2 PureTech, 2018">
+        </label>
+        <label>Message
+          <textarea id="message" placeholder="Décrivez votre demande"></textarea>
+        </label>
+        <p class="hint">Choisissez comment envoyer : votre message est prérempli, il n'y a plus qu'à valider.</p>
+        <div class="channels">
+          <button class="btn wa" type="button" data-ch="wa">WhatsApp</button>
+          <button class="btn primary" type="button" data-ch="sms">SMS</button>
+          <button class="btn ghost" type="button" data-ch="mail">Mail</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong>REPROG30</strong><br>Reprogrammation automobile • Clim • Serrurerie automobile</div>
+    <div>© 2026 Reprog30 — Tous droits réservés.<br><a href="mentions-legales.html">Mentions légales</a> · <a href="#contact">Contact</a></div>
+  </div>
+</footer>
+
+<nav class="callbar" aria-label="Contact rapide">
+  <a href="tel:+33656694238">Appeler</a>
+  <a href="https://wa.me/33656694238" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="sms:+33656694238">SMS</a>
+  <a href="mailto:reprog30@gmail.com">Mail</a>
+</nav>
+
+<script>
+(function(){
+  var NUM='33656694238', MAIL='reprog30@gmail.com';
+  function build(){
+    var sv=document.getElementById('service').value;
+    var v=document.getElementById('vehicule').value.trim();
+    var m=document.getElementById('message').value.trim();
+    var t='Bonjour Reprog30,\nBesoin : '+sv;
+    if(v) t+='\nVéhicule : '+v;
+    if(m) t+='\n\n'+m;
+    return {sv:sv,text:t};
+  }
+  document.querySelectorAll('[data-ch]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var d=build(), e=encodeURIComponent(d.text), ch=b.getAttribute('data-ch');
+      if(ch==='wa') window.open('https://wa.me/'+NUM+'?text='+e,'_blank','noopener');
+      else if(ch==='sms') window.location.href='sms:+'+NUM+'?&body='+e;
+      else window.location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Demande de devis – '+d.sv)+'&body='+e;
+    });
+  });
+})();
+
+(function(){
+  var NUM='33656694238', MAIL='reprog30@gmail.com';
+  var MOBILE=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function msg(){
+    var r=document.querySelector('input[name="note"]:checked');
+    var note=r?r.value:null;
+    var nom=document.getElementById('avNom').value.trim();
+    var txt=document.getElementById('avTexte').value.trim();
+    var sv=document.getElementById('avService').value;
+    var t='Avis Reprog30\nNote : '+(note?note+'/5':'non renseignée')+'\nPrestation : '+sv;
+    if(nom) t+='\nPrénom : '+nom;
+    if(txt) t+='\n\n'+txt;
+    return t;
+  }
+  document.querySelectorAll('[data-av]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var e=encodeURIComponent(msg()), ch=b.getAttribute('data-av'), su=encodeURIComponent('Avis client Reprog30');
+      if(ch==='wa') window.open('https://wa.me/'+NUM+'?text='+e,'_blank','noopener');
+      else if(ch==='sms') window.location.href='sms:+'+NUM+'?&body='+e;
+      else if(MOBILE) window.location.href='mailto:'+MAIL+'?subject='+su+'&body='+e;
+      else window.open('https://mail.google.com/mail/?view=cm&fs=1&to='+MAIL+'&su='+su+'&body='+e,'_blank','noopener');
+    });
+  });
+})();
+
+(function(){
+  var liste=document.getElementById('avisListe'), moy=document.getElementById('avisMoy');
+  var btn=document.getElementById('avPublier'), retour=document.getElementById('avRetour');
+  function etoiles(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);}
+  function vide(msg){liste.textContent='';var p=document.createElement('p');p.className='vide';p.textContent=msg;liste.appendChild(p);moy.textContent='';}
+  function afficher(rows){
+    if(!rows.length){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');return;}
+    var somme=0;liste.textContent='';
+    rows.forEach(function(r){
+      somme+=r.note;
+      var d=document.createElement('article');d.className='rev';
+      var st=document.createElement('div');st.className='st';st.textContent=etoiles(r.note);
+      var q=document.createElement('div');q.className='qui';q.textContent=r.prenom||'Client';
+      if(r.prestation){var sm=document.createElement('small');sm.textContent=' · '+r.prestation;q.appendChild(sm);}
+      var p=document.createElement('p');p.textContent=r.texte;
+      d.appendChild(st);d.appendChild(q);d.appendChild(p);liste.appendChild(d);
+    });
+    var m=(somme/rows.length).toFixed(1).replace('.',',');
+    moy.textContent='';
+    var b=document.createElement('b');b.textContent=m+'/5';moy.appendChild(b);
+    moy.appendChild(document.createTextNode(' · '+rows.length+' avis'));
+  }
+  function charger(){
+    fetch('/api/avis').then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(rows){afficher(rows);if(btn)btn.hidden=false;})
+      .catch(function(){vide('Pas encore d\u2019avis. Soyez le premier à partager votre expérience !');});
+  }
+  charger();
+  if(!btn)return;
+  btn.addEventListener('click',function(){
+    retour.className='retour';retour.textContent='';
+    if(document.getElementById('avSite').value){return;}
+    var r=document.querySelector('input[name="note"]:checked');
+    var texte=document.getElementById('avTexte').value.trim();
+    var prenom=document.getElementById('avNom').value.trim().slice(0,40);
+    if(!r){retour.className='retour err';retour.textContent='Choisissez une note en cliquant sur les étoiles.';return;}
+    if(texte.length<5){retour.className='retour err';retour.textContent='Écrivez un petit commentaire (5 caractères minimum).';return;}
+    btn.disabled=true;
+    fetch('/api/avis',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prenom:prenom||'Client',note:Number(r.value),prestation:document.getElementById('avService').value,texte:texte.slice(0,500)})})
+      .then(function(x){
+        if(x.status===429){retour.className='retour err';retour.textContent='Merci de patienter une minute avant un nouvel avis.';return;}
+        if(!x.ok)throw 0;
+        retour.className='retour ok';retour.textContent='Merci ! Votre avis est publié.';
+        document.getElementById('avTexte').value='';document.getElementById('avNom').value='';r.checked=false;charger();})
+      .catch(function(){retour.className='retour err';retour.textContent='Impossible de publier l\u2019avis pour le moment. Réessayez plus tard.';})
+      .then(function(){btn.disabled=false;});
+  });
+})();
+</script>
+</body>
+</html>
